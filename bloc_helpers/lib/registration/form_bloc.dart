@@ -17,15 +17,23 @@ class FormBloc extends Object
       _passwordConfirmController.sink.add;
 
   Stream<String> get email => _emailController.transform(validateEmail);
-  Stream<String> get password => _passwordController.transform(validateEmail);
-  Stream<String> get confirmPassword =>
-      _passwordConfirmController.transform(validateEmail).doOnData((String c) {
+  Stream<String> get password =>
+      _passwordController.transform(validatePassword);
+  Stream<String> get confirmPassword => _passwordConfirmController
+          .transform(validatePassword)
+          .doOnData((String c) {
         if (0 != _passwordController.value.compareTo(c)) {
           _passwordConfirmController.addError("no match password");
         }
       });
+
+  Stream<bool> get registraValid => Observable.combineLatest3(
+      email, password, confirmPassword, (e, p, c) => true);
   @override
   void dispose() {
     // TODO: implement dispose
+    _emailController?.close();
+    _passwordController?.close();
+    _passwordConfirmController?.close();
   }
 }
