@@ -16,7 +16,6 @@ class ShopBloc implements BlocBase {
       BehaviorSubject<List<ShopItem>>();
   Stream<List<ShopItem>> get basketItems => _basketController;
 
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -28,9 +27,7 @@ class ShopBloc implements BlocBase {
     _loadShopItems();
   }
 
-  void _loadShopItems() {
-    
-  }
+  void _loadShopItems() {}
 
   void addToBasket(ShopItem item) {
     _basket.add(item);
@@ -57,6 +54,5 @@ class ShopBloc implements BlocBase {
             .withOpacity(1.0),
       );
     }));
-  }
   }
 }
